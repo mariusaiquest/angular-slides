@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Angular2 Overview</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<section>
+						<h2>Angular2</h2>
+						<p class="fragment">JavaScript framework for building client apps / SPAs in HTML/TS, Dart, ES6, ES5</p>
+						<p class="fragment">Complete rewrite of AngularJS</p>
+						<p class="fragment">Component-based (not an MVC framework)</p>
+						<p class="fragment">Developed and mantained by Google</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>TypeScript</h2>
+							<p class="fragment">A superset of JavaScript created by Microsoft</p>
+							<p class="fragment">Supports types, classes, interfaces, generics, annotations</p>
+							<p class="fragment">Compiles into a human-readable JavaScript</p>
+							<p class="fragment">Supports most of the ES6 and some ES7 syntax</p>
+					</section>
+					<section>
+						<h2>TypeScript Compiler</h2>
+							<p>Dependencies: <strong>Node.js</strong> / <strong>npm</strong></p>
+							<p>Installation <pre><code class="hljs">
+npm install -g typescript
+</code></pre>
+							</p>
+							<p>Sample <strong>tsconfig.json</strong>
+<pre><code class="hljs javascript">
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "experimentalDecorators": true
+  }
+} 
+</code></pre>
+							</p>
+					</section>
+				</section>
+
+				<section>
+
+					<section>
+						<h2>MODULE DEPENDENCY</h2>
+							<p>Angular2 is fully modular</p>
+							<p>In ES2015 &amp; SystemJS
+<pre><code class="hljs javascript">import { BarModule } from './Bar.comp';
+import { AnotherComp } from './another.comp';
+</code></pre></p>
+										
+					</section>
+
+					<section>
+						<p>Can use other module loaders</p>
+						<div class="split-left" style="width: 33%">
+							<img src="img/systemjs/webpack.png" alt="webpack" height="192">
+							<br>
+							<a href="https://webpack.github.io/docs/">Webpack</a>
+						</div>
+						<div class="split-left" style="width: 33%">
+							<img src="img/systemjs/jspm.png" alt="jspm" height="192">
+							<br>
+							<a href="http://jspm.io/">JSPM</a>
+						</div>
+						<div class="split-left" style="width: 33%">
+							<img src="img/systemjs/rollupjs.svg" alt="rollupjs" height="192">
+							<br>
+							<a href="http://rollupjs.org/">Rollup.js</a>
+						</div>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>Angular2 Architecture</h2>
+					</section>
+
+					<section>
+						<h2>Modules</h2>
+						<ul>
+							<li class="fragment">Angular Modules / NgModules</li>
+							<li class="fragment">Root Module / Featured Modules</li>
+							<li class="fragment">Decorators</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>NgModule Decorator</h2>
+<pre><code class="hljs javascript">import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+@NgModule({
+  imports:      [ BrowserModule ],
+  providers:    [ Logger ],
+  declarations: [ AppComponent ],
+  exports:      [ AppComponent ],
+  bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+
+</code></pre></p>
+					</section>
+
+					<section>
+						<h2>Components</h2>
+						<p>
+						<pre><code class="hljs javascript">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'angular-app',
+  templateUrl: './app/components/application/app.component.html'
+})
+export class AppComponent { }
+						</code></pre></p>
+						<ul>
+							<li class="fragment">Classes which describes the functionality to deal with a view</li>
+							<li class="fragment">Template</li>
+							<li class="fragment">Metadata</li>
+
+						</ul>
+					</section>
+
+					<section>
+						<h2>Data binding</h2>
+						<p>Unidirectional: Component -> Template</p>
+						<ul>
+							<li>{{}} -> interpolation</li>
+							<li>[] -> property binding</li>
+						</ul>
+<pre><code class="hljs javascript"><h1>Hello {{ name }}!</h1> </code></pre>	
+<pre><code class="hljs javascript"><span [hidden]=“isZipcodeValid”>Zip code is not valid</span>  </code></pre>										
+					</section>
+					<section>
+						<h2>Data binding</h2>
+						<p>Unidirectional: Template -> Component</p>
+						<ul>
+							<li>() -> event binding</li>
+						</ul>
+<pre><code class="hljs javascript"></code></pre>	
+<pre><code class="hljs javascript">import { Component } from '@angular/core'
+
+@Component({
+  selector: 'my-component',
+  template: `
+	<h1>{{ name }}</h1>
+	<button (click)="changeName()">Change Name</button>
+  `
+})
+export class AppComponent { 
+	name = "John Doe"
+
+	changeName() {
+		this.name = "New  name"
+	}
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Data binding</h2>
+						<p>Two way with ngModel</p>
+<pre><code class="hljs javascript">@Component({
+ selector: 'two-way-binding',
+ template: `<input type='text' placeholder= "Enter shipping address" 
+ 				[(ngModel)] = "shippingAddress"/>
+	    <button (click)="shippingAddress='123 Main Street'">Set Default Address</button>
+	    <p>The shipping address is {{shippingAddress}}</p>
+`
+})
+export class AppComponent {
+	shippingAddress: string
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Directives</h2>
+						<ul>
+							<li>Classes with @Directive decorator</li>
+							<li>Structural: <strong>*ngFor</strong>, <strong>*ngIf</strong> - modifies the structure</li>
+							<li>Attribute: <strong>ngModel</strong> - modifies behavior </li>
+							<li>Custom directives</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Services</h2>
+						<ul>
+							<li>Classes with well defined purpose</li>
+							<li>Called by components</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>Dependency Injection</h2>
+						<ul>
+							<li>
+								Provide new components with the services they need.
+							<li>Called by components
+<pre><code class="hljs javascript">constructor(private service: ProductsService) { }</code></pre>
+<pre><code class="hljs javascript">//app/app.module.ts (module providers)
+	providers: [
+  BackendService,
+  ProductService,
+  Logger
+],
+</code></pre>
+<pre><code class="hljs javascript">//app/my-comp.component.ts (module providers)
+@Component({
+  moduleId: module.id,
+  selector:    'my-comp',
+  templateUrl: 'my-comp.component.html',
+  providers:  [ MyService ]
+})
+
+</code></pre>
+							</li>
+						</ul>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

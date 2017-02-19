@@ -30,3 +30,29 @@ p.left {
 p {
   text-align: left;
 }*/
+.reveal pre {
+    white-space: normal;
+    line-height: inherit;
+}
+
+.left-column {
+    float:left;
+    width: 50%;
+}
+
+.right-column {
+    float:right;
+    width: 50%;
+}
+
+code.javascript {
+    white-space: pre-wrap;
+}
+
+code.small-font-code {
+    font-size: 15px;
+}
+
+.reveal pre code {
+    max-height: 500px;
+}

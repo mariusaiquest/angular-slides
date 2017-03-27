@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <title>Angular2 Overview</title>
+        <title>TypeScript</title>
 
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/black.css">
@@ -31,6 +31,18 @@
                     <p class="fragment">Supports types, classes, interfaces, generics, annotations</p>
                     <p class="fragment">Easy to learn by Java, C#, and C++ developers </p>
                     <p class="fragment">Supports most of the ES6 and some ES7 syntax</p>
+                </section>
+				<section>
+                    <h3>Installing TypeScript Compiler</h3>
+                    <ul>
+                        <li class="fragment">Install Node.js from nodejs.org. It comes with the npm package manager.</li>
+                        <li class="fragment">Install the typescript compiler globally:<br/>
+                            <span style="color: #068de9">npm install -g typescript </span>
+                        </li>
+                        <li class="fragment">Compile main.ts into main.js specifying ES5 as target language syntax:<br/>
+                            <span style="color: #068de9">tsc —t ES5 main.ts </span>
+                        </li>
+                    </ul>
                 </section>
                 <section>
                     <section>
@@ -490,36 +502,7 @@ workers.forEach(function (worker) { return worker.increasePay(30); });
                             </pre>
                         </div>
                     </section>                    
-                </section>
-                <section>
-                    <h3>Installing TypeScript Compiler</h3>
-                    <ul>
-                        <li class="fragment">Install Node.js from nodejs.org. It comes with the npm package manager.</li>
-                        <li class="fragment">Install the typescript compiler globally:<br/>
-                            <span style="color: #068de9">npm install -g typescript </span>
-                        </li>
-                        <li class="fragment">Compile main.ts into main.js specifying ES5 as target language syntax:<br/>
-                            <span style="color: #068de9">tsc —t ES5 main.ts </span>
-                        </li>
-                    </ul>
-                </section>
-                
-                <section>
-                    <h3>Sample tsconfig.json</h3>
-                    <pre>
-                        <code data-trim class="hljs javascript small-font-code">
-{
-    "compilerOptions": {
-        "target": "ES5",
-        "module": "commonjs",
-        "experimentalDecorators": true
-    }
-}
-                        </code>
-                    </pre>
-                    <p>If tsconfig.json is present in the current directory, just type tsc on the command prompt</p>
-                </section>
-                
+                </section>                
             </div>
         </div>
 

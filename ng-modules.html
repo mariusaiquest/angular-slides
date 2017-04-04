@@ -1,0 +1,397 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>NgModules</title>
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css">
+        <link rel="stylesheet" href="css/custom.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <section>
+                        <h2>NgModules</h2>
+                        <p class="fragment">A mechanism to group components, directives, pipes and services that are related</p>
+                        <p class="fragment">Similar to ES6 Modules ( <i>declarations, imports, exports</i> )</p>
+                            <div class="fragment">
+                                <pre>
+                                    <code class="hljs javascript">
+import { NgModule } from '@angular/core';
+...
+
+@NgModule({ //decorator
+  imports: [BrowserModule],
+  declarations: [AppComponent],
+  exports: [...],
+  providers: [...],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+                                    </code>
+                                </pre>
+                            </div>
+                    </section>
+                    <section>
+                        <h4>Imports</h4>
+                        <ul>
+                            <li class="fragment">Expects an array of modules - only NgModules</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>Declarations</h4>
+                        <ul>
+                            <li class="fragment">Components / Directives / Pipes belonging to the NgModule - only Declarables </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>Exports</h4>
+                        <ul>
+                            <li class="fragment">Components visible for other modules </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>Providers</h4>
+                        <ul>
+                            <li class="fragment">Services at the application level that any component can use </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>Bootstrap</h4>
+                        <ul>
+                            <li class="fragment">The component(s) to bootstrap </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>AppModule / Application root module</h2>
+                        <ul>
+                            <li class="fragment">Contains the component for bootstrap - launch the app</li>
+                            <li class="fragment">Dynamic bootstraping - JIT Compiler</li>
+                            <li class="fragment">Static bootstraping - AOT Compiler</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Feature modules</h2>
+                        <ul>
+                            <li class="fragment">Same properties and metadata as the Root Module</li>
+                            <li class="fragment">Share the same execution context, same injector as Root Module - services available to all</li>
+                            <li class="fragment">Extends the app</li>
+                        <ul>
+                    </section>
+
+                    <section>
+                        <h4>Loading</h4>
+                        <ul>
+                            <li class="fragment">Eagerly</li>
+                            <li class="fragment">Lazy - by the Router
+                                <pre>
+                                    <code class="hljs javascript">
+export const routes: Routes = [
+...
+{ path: 'lazy-loaded-module', loadChildren: 'app/lazy/lazy-module.module#LazyModule' },
+...
+];
+                                    </code>
+                                </pre>
+                            </li>
+                        <ul>
+                    </section>
+
+                    <section>
+                        <h4>Shared Modules</h4>
+                        <ul>
+                            <li class="fragment">exists to make commonly used components, directives, and pipes available for use in many other modules</li>
+                            <li class="fragment">Don't specify providers here!</li>
+                        <ul>
+                    </section>
+
+                    <section>
+                        <h4>Core Module</h4>
+                        <ul>
+                            <li class="fragment">Specify the Core items that will be used in all modules</li>
+                        <ul>
+                    </section>
+
+                    <section>
+                        <h4>Routing module</h4>
+                        <ul>
+                            <li class="fragment">Separates routing / application concerns</li>
+                            <li class="fragment">Provides a module to replace or remove when testing the application</li>
+                            <li class="fragment">Provides a well-known location for routing service providers including guards and resolvers</li>
+                            <li class="fragment">Does not declare components</li>
+                        <ul>
+                    </section>
+
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Dependency Injection</h2>
+                        <p class="fragment">Angular`s DI system creates and delivers dependent services "just-in-time"</p>
+                    </section>
+                </section>
+
+
+                <section>
+                    <section>
+                        <h2>Routing</h2>
+                        <p class="fragment">The Angular Router enables navigation from one view to the next</p>
+                    </section>
+
+                    <section>
+                        <h4>Routing</h4>
+                        <pre>
+                            <code class="hljs javascript">
+const appRoutes: Routes = [
+  { path: 'url', component: SomeComponent },
+  { path: 'collection/:id', component: AnotherComponent },
+  {
+    path: 'collection',
+    component: CollectionComponent,
+    data: { title: 'Some title' }
+  },
+  { path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  },
+  { path: '**', component: PageNotFoundComponent }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(appRoutes)
+  ]
+})
+export class AppModule { }
+                                    </code>
+                                </pre>
+                    </section>
+                    <section>
+                        <h4>Router outlet</h4>
+                        <pre>
+                            <code class="hljs javascript">
+<router-outlet></router-outlet>
+<!-- Routed views go here --> 
+                            </code>
+                        </pre>                       
+                    </section>
+
+                    <section>
+                        <h4>Router links</h4>
+                        <pre>
+                            <code class="hljs html">
+<a routerLink="/url-to-navigate" routerLinkActive="active">Simple Url</a>
+<a [routerLink]="['url', user.id]" routerLinkActive="active">User edit</a>
+<!-- link parameters array //-->
+                            </code>
+                        </pre>                       
+                    </section>
+
+                    <section>
+                        <h4>ActivatedRoute</h4>
+                        <ul>
+                            <li class="fragment">Makes available the active route and its params</li>
+                        </ul>
+                        <pre class="fragment">
+                            <code class="hljs javascript">
+import { Router, ActivatedRoute, Params } from '@angular/router';
+...
+constructor(
+  private route: ActivatedRoute,
+  private router: Router
+) {}
+...
+ngOnInit() {
+  this.route.params //<-- provided as Oservable
+    // (+) converts string 'id' to a number
+    .switchMap((params: Params) => this.service.fetchSomeData(+params['id']))
+    .subscribe(data => this.data = data);
+}
+
+                            </code>
+                        </pre> 
+                    </section>
+
+                    <section>
+                        <h4>Snapshot</h4>
+                        <ul>
+                            <li class="fragment">Makes available only the initial value of the params of the route</li>
+                        </ul>
+                        <pre class="fragment">
+                            <code class="hljs javascript">
+...
+ngOnInit() {
+  // (+) converts string 'id' to a number
+  let id = +this.route.snapshot.params['id'];//only the initial value
+
+  this.service.getHero(id)
+    .then((hero: Hero) => this.hero = hero);
+}
+
+                            </code>
+                        </pre> 
+                    </section>
+
+                    <section>
+                        <h4>Relative navigation</h4>
+                        <pre>
+                            <code class="hljs javascript">
+this.router.navigate(['../'], { relativeTo: this.route });
+                            </code>
+                        </pre> 
+                    </section>
+                    
+
+                    <section>
+                        <h4>Named outlets &amp; Secondary routes</h4>
+                        <pre>
+                            <code class="hljs javascript">
+//route configuration
+{
+  path: 'named-outlet-url',
+  component: AComponent,
+  outlet: 'namedoutlet'
+},
+
+//template markup
+<router-outlet></router-outlet>
+<router-outlet name="namedoutlet"></router-outlet>
+
+//template navigation
+<a [routerLink]="[{ outlets: { namedoutlet: ['named-outlet-url'] } }]">Named Outlet</a>
+
+...
+//clearing named outlets routes
+this.router.navigate([{ outlets: { popup: null }}]);
+                            </code>
+                        </pre> 
+                    </section>
+
+                    <section>
+                        <h4>Guards</h4>
+                        <p>A Guard's return value control the user navigation:</p>
+                        <ul>
+                            <li>true -> navigation continues</li>
+                            <li>false -> navigation stops</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Supported Guards</h4>
+                        <ul>
+                            <li>CanActivate</li>
+                            <li>CanActivateChild</li>
+                            <li>CanDeactivate</li>
+                            <li>Resolve</li>
+                            <li>CanLoad</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Resolvers / pre-fetching component data</h4>
+                       <pre>
+                            <code class="hljs javascript">
+@Injectable()
+export class DataResolver implements Resolve&laquo;SomeModel&raquo; {
+  constructor(private cs: DataService, private router: Router) {}
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise&laquo;SomeModel&raquo; {
+    let id = route.params['id'];
+    return this.cs.getData(id).then(data => {
+      if (data) {
+        return data;
+      } else { // id not found
+        this.router.navigate(['/another-url']);
+        return null;
+      }
+    });
+  }
+}
+                            </code>
+                        </pre> 
+                    </section>
+
+                    <section>
+                        <h4>Asyncronous routing</h4>
+                        <ul>
+                            <li class="fragment">Lazy loading route configuration</li>
+                            <li class="fragment">Preloading - Custom preloading strategies:
+                       <pre>
+                            <code class="hljs javascript">
+{
+  path: 'url-to-load',
+  loadChildren: 'app/module-name/module-name.module#ModuleNameModule',
+  data: { preload: true }
+},
+                            </code>
+                        </pre> 
+                    </section>
+                    <section>
+
+                       <pre>
+                            <code class="hljs javascript">
+export class SelectivePreloadingStrategy implements PreloadingStrategy {
+  preloadedModules: string[] = [];
+
+  preload(route: Route, load: () => Observablee&laquo;any&raquo;): Observablee&laquo;any&raquo; {
+    if (route.data && route.data['preload']) {
+      this.preloadedModules.push(route.path);
+      return load();
+    } else {
+      return Observable.of(null);
+    }
+  }
+}
+                            </code>
+                        </pre> 
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Forms</h2>
+                        <p class="fragment"></p>
+                    </section>
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
+
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [
+                    {src: 'plugin/markdown/marked.js'},
+                    {src: 'plugin/markdown/markdown.js'},
+                    {src: 'plugin/notes/notes.js', async: true},
+                    {src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                            hljs.initHighlightingOnLoad(); }}
+                ]
+            });
+        </script>
+    </body>
+</html>
